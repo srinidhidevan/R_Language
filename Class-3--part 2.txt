@@ -1,0 +1,15 @@
+#DATA VISUALISATION
+#1. BAR CHART
+#create the data for the chart 
+N<-c(7,11,26,3,4,2)
+M<-c("mar","apr","may","jun","jul","äug")
+barplot(N,names.arg=M,xlab="Month",ylab="Revenue",main="rev chart",col=c("blue","red","green","orange","brown","lightblue"))
+#names.agr:name of the variable appearing under each bar
+
+2. STACKED BAR CHART (for which we require matrix)
+values<-matrix(c(1,2,3,4,5,6,7,8,9),nrow=3,ncol=5,byrow=TRUE)
+#byrow:read by col
+M<-c("mar","apr","may","jun","jul")
+regions<-c("Ëast","West","North")
+barplot(values,names.arg=M,xlab="Month",ylab="Revenue",main="rev chart",col=c("blue","red","green"))
+legend("topleft",regions,cex=1.3,fill=c("blue","red","green"))

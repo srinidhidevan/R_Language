@@ -1,0 +1,78 @@
+#CLUSTERED BAR CHART- USING CITYSALES DATA
+data<-read.csv("C:/Users/nmims.student/Documents/Predictive Analysis/citysales.csv",stringsAsFactor=TRUE)
+#the lables are talken as factor
+
+x<-barplot(as.matrix(data[,2:4]),beside=TRUE,ylim=c(0,100),col=c("red","blue","green","purple","orange"),ylab="Sales Revenue",main="Sales Figure",legend=data[,1],args.legend=list(bty="n",horiz=TRUE))
+#all col and 2nd to 4th row
+#beside=TRUE--->CLUSTERED BAR CHART
+#ylim--->scale(y-axis)
+#bty="n"--->list for the y-axis
+
+y<-as.matrix(data[,2:4])
+text(x,y+2,labels=as.character(y),cex=0.8)
+
+
+#PIE CHART
+x<-c(21,62,10,53)
+labels<-c("London","New York","Singapore","Mumbai")
+pie(x,labels,main="Data",font=2,col=c("Red","Gold","Black","Green"))
+#main-->title
+#font: 1-plain; 2-bold; 3-italic; 4-bold italic; 5-symbol
+#col-colour of the pie chart
+
+#percentage for the pie chart
+x<-c(21,62,10,53)
+labels<-c("London","New York","Singapore","Mumbai")
+piepercent<-round(100*x/sum(x),1)
+#,1->one decimal place
+
+#plot the chart with legend
+pie(x,labels = piepercent,main="Data",font=2,col=c("Red","Gold","Black","Green"))
+legend("topright",c("London","New York","Singapore","Mumbai"),cex=0.8,fill=c("Red","Gold","Black","Green"))
+
+#Pie Chart without legend
+x<-c(21,62,10,53)
+labels<-c("London","New York","Singapore","Mumbai")
+piepercent<-round(100*x/sum(x),1)
+labels=paste(labels,piepercent)
+labels=paste(labels,"%",sep="")
+pie(x,labels=labels,main="Cit Pie Chart",font=2,col=c("Red","Gold","Black","Green"))
+
+
+#LINE CHART
+v<-c(7,12,28,3,41)
+#plot the line chart
+plot(v,type="o",col="red",main="Rainfall Chart",xlab="Month",ylab="Rainfall")
+
+#another example
+v<-c(7,12,28,3,41)
+t<-c(14,7,6,19,3)
+plot(v,type="o",col="black",main="Rainfall Chart",xlab="Month",ylab="Rainfall")
+lines(t,type="o",col="gold")
+#adding legend
+legend("topleft",legend=c("Mumbai","Delhi"),col=c("black","gold"),lty=1:2,cex=0.8)
+#lty-->line type
+
+
+#SCATTER PLOT USING 'MTCARS' DATASET (R built-in)
+input<-mtcars[,c('wt','mpg')]
+#plot the chart for cars with 2.5 to 5 and mileage between 15 and 30
+plot(x=input$wt,y=input$mpg,xlab="Weight",ylab="Mileage",xlim=c(2.5,5),ylim=c(15,30),main="Wt vs Mpg")
+
+#multiple scatter plot
+pairs(~wt+mpg+disp+cyl,data=mtcars,main="Scatterplot Matrix")
+
+
+#BOX PLOT
+input<-mtcars[,c('mpg','cyl')]
+boxplot(mpg~cyl,data=mtcars,xlab="mpg",ylab="no of cyl",main="Mileage data")
+
+#single box plot- using churn file
+churn<-read.csv("C:/Users/nmims.student/Documents/Predictive Analysis/Data/churn.csv",stringsAsFactor=FALSE)
+head(churn)
+input<-churn$Day.Mins
+boxplot(input,ylab="Day Mints")
+
+#boxplots with notch
+boxplot(mpg~cyl,data=mtcars,xlab="no of cyl",ylab="mpg",main="mileage data",notch=TRUE,varwidth=TRUE,col=c("green","gold","black"),names=c("high","med","low"))
+#width is proportional to the number of obs

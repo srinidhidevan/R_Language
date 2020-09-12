@@ -1,0 +1,55 @@
+library(mice)
+
+data<-airquality
+View(data)
+summary(data)
+data[4:10,3]<-rep(NA,7) 
+data[1:5,4]<-NA
+summary(data)
+
+
+#IMPUTING THE MISSING DATA (	Two-step Method)
+#Step-1:Imputing the missing values
+tempdata<-mice(data,m=5,maxit=50,meth='pmm',seed=500)
+summary(tempdata)
+#m:no of imputed datasets
+#maxit:max no of iterations
+#meth:imputation method; in this case we are using predicitve mean matching method
+#seed:for gemnerating random values
+methods(mice)
+#to find other methods of imputation
+tempdata$imp$Ozone
+#to check the imputed data, say for Ozone
+#Step-2:Replace the missing values with the imputed data above 
+completedata<-complete(tempdata,1)
+#the complete data is the dataset which is the original 'data' without missive values where they are imputed
+summary(completedata)
+
+#Inspecting the distribution of original and imputed data (Two-Methods)
+#Method-1:XY-Plot
+xyplot(tempdata,Ozone~Wind+Temp+Solar.R,pch=18,cex=1)
+#blue=non imputed values
+#red=imputed values
+#pch:character for plotting the chart
+#cex:character extended; 1 is the default
+#Method-2:Density Plot
+densityplot(tempdata)
+
+
+#REMOVING DUPLICATE RECORDS
+x<-c(1,1,4,5,4,6)
+duplicated(x)
+#logical vector where True specifies which element of the vector or data frames are duplicates
+x[!duplicated(x)]
+#gives only the uniques values from the vector
+#alternatively, we can use:
+unique(x)
+x[duplicated(x)]
+#gives the duplicate values
+
+#With the in-built R dataset: IRIS
+library(dplyr)
+data<-as_tibble(iris)
+data
+#remove duplicated based on Sepal.Width coulmns
+data[!duplicated(data$Sepal.Width),]

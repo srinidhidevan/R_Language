@@ -1,0 +1,54 @@
+##IDENTIFICATION OF MISSING VALUES
+#is.na()-identify the missing value
+#na.omit()-ommitting the values/another way to deal with missing values- CASE DELETION METHOD (C.D.)
+
+#MONTE CARLO SIMULATION
+#Using is.na()
+name<-c("sri","nidhi",NA)
+age<-c(23,NA,45)
+gender<-c("F","M","F")
+dt<-data.frame(name,age,gender) #creating a data frame (matrix) for name, age and gender
+dt
+is.na(dt)
+sum(is.na(dt)) #no. of missing values in the feeded entries
+mean(is.na(dt)) #avg missing values--->no. of missing val/tot no of values=2/9
+
+#Using na.omit()- CASE DELETION METHOD (C.D.)
+name<-c("sri","nidhi",NA)
+age<-c(23,99,45)
+gender<-c("F","M","F")
+dt<-data.frame(name,age,gender)
+dt
+is.na(dt)
+dt$age[dt$age==99]<-NA #missing values are sometimes are denoted 9, so replacing the age '99' which is not possible in many cases will be replaced by NA
+dt
+is.na(dt)
+#another useful way to deal with missing values is na.omit()
+dt1<-na.omit(dt) #omits the row that contains missing values
+dt1
+
+#ANOTHER EXAMPLE- 'airquality' DATA
+data<-airquality
+View(data)
+summary(data) #Ózone' & 'Solar.R' contains missing values
+nrow(data)
+ncol(data)
+data[4:10,3]<-rep(NA,7) #Col 4 to 10 of 3rd variable, replicate (rep) NA seven times
+data[1:5,4]<-NA
+summary(data)
+
+data<-data[-c(5,6)] #excluding 5th and 6th variables
+summary(data)
+perMiss<-function(x){sum(is.na(x))/length(x)*100}  #defining the func to calc %ge missing (length-no of values in x)
+apply(data,2,perMiss) #where 2--->col %ge ; %ge of missing val in each variable
+apply(data,1,perMiss) #where 1--->row %ge
+
+#Graphical Representation of Missing Values
+install.packages("mice")
+library(mice)
+md.pattern(data) #missing data (md) pattern #out of 153 records, 104 records are error free and 49 records have some missing values
+#blue--->1 and red--->0 (missing values)
+
+install.packages("VIM")
+library(VIM)
+agg_plot<-aggr(data,col=c('gold','black'),numbers=TRUE,sortVars=TRUE,labels=names(data),cex.axis=0.7,gap=3,ylab=c("Histogram of Missing Data","Pattern"))

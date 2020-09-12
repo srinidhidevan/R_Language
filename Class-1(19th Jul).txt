@@ -1,0 +1,9 @@
+#CHURN
+data<-read.csv("C:/Users/nmims.student/Desktop/churn.csv",stringsAsFactors=TRUE)
+sum<-summary(data)
+nrow(data)
+ncol(data)
+summary(data$Churn)
+write.csv(sum,file="C:/Users/nmims.student/Desktop/summary_churn.csv")
+areaf<-as.factor(data$Area.Code)
+#as.factor-converts numerical to categorical field
